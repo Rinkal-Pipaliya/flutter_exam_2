@@ -1,16 +1,12 @@
-# flutter_exam_2
+# Students Management App 
 
 A new Flutter project.
 
-## Getting Started
+## OUtput:
 
-This project is a starting point for a Flutter application.
+https://github.com/user-attachments/assets/e75d1f2f-4900-4ee8-a0f0-4f0511d40ccb
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<img src ="https://github.com/user-attachments/assets/22e32e5d-0cff-49e5-8e86-9fec98d15889" width = "250"> 
+<img src = "https://github.com/user-attachments/assets/158c73a0-4058-47fd-aa10-5fdda836e7610" width = "250">
+<img src = "https://github.com/user-attachments/assets/98958fd4-caff-4c60-804e-4be96c5dbbfb" width = "250">
+<img src = "https://github.com/user-attachments/assets/32c7c2eb-214f-4b13-98da-bf40addb3bda" width = "250">
