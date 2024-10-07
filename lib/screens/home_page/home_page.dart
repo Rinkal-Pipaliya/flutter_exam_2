@@ -1,0 +1,133 @@
+import 'dart:math';
+import 'package:flutter/material.dart';
+import 'package:flutter_exam_2/modals/std_modals.dart';
+import 'package:flutter_exam_2/utils/routes_utils.dart';
+import 'package:flutter_exam_2/utils/std_data.dart';
+
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  void showRandomQuote() {
+    Random r = Random();
+
+    String category = "education";
+
+    List<QuoteData> l = allQuotes
+        .where(
+          (element) => element.category == category,
+        )
+        .toList();
+
+    QuoteData q = l[r.nextInt(l.length)];
+
+    showDialog(
+      context: context,
+      builder: (context) => SimpleDialog(
+        title: const Text("😊 Education 😊 "),
+        contentPadding: const EdgeInsets.all(16),
+        children: [
+          Text(q.quote),
+        ],
+      ),
+    );
+  }
+
+  @override
+  void initState() {
+    Future.delayed(
+      const Duration(seconds: 3),
+      () {
+        showRandomQuote();
+      },
+    );
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.sizeOf(context);
+
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: const Text(
+          " Home Page  ",
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: const Color(0xFF92E3A9),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Row(
+          children: [
+            GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, MyRoutes.detailPage)
+                    .then((value) => () {});
+              },
+              child: Container(
+                alignment: Alignment.bottomCenter,
+                height: 155,
+                width: 155,
+                margin: const EdgeInsets.only(right: 9),
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Colors.grey,
+                      blurRadius: 5.0,
+                    ),
+                  ],
+                  color: const Color(0xFF92E3A9),
+                  borderRadius: BorderRadius.circular(20),
+                  image: const DecorationImage(
+                    image: AssetImage(
+                      "lib/assets/images/detail.png",
+                    ),
+                    scale: 7,
+                  ),
+                ),
+                child: const Text(
+                  "Create",
+                  style: TextStyle(color: Colors.black),
+                ),
+              ),
+            ),
+            Container(
+              alignment: Alignment.bottomCenter,
+              height: 155,
+              width: 155,
+              padding: const EdgeInsets.all(16),
+              margin: const EdgeInsets.only(right: 9),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                image: const DecorationImage(
+                  image: AssetImage(
+                    "lib/assets/images/save.png",
+                  ),
+                  scale: 7,
+                ),
+                color: const Color(0xFF92E3A9),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Colors.grey,
+                    blurRadius: 5.0,
+                  ),
+                ],
+              ),
+              child: const Text(
+                "Save",
+                style: TextStyle(color: Colors.black),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

@@ -1,0 +1,280 @@
+import 'dart:io';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_exam_2/utils/global.dart';
+import 'package:image_picker/image_picker.dart';
+
+class DetailPage extends StatefulWidget {
+  const DetailPage({super.key});
+
+  @override
+  State<DetailPage> createState() => _DetailPageState();
+}
+
+class _DetailPageState extends State<DetailPage> {
+  SnackBar mySnackBar({required String content, required Color color}) {
+    return SnackBar(
+      content: Text(content),
+      backgroundColor: color,
+    );
+  }
+
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: const Text(
+            " Student Detail page ",
+            style: TextStyle(color: Colors.black),
+          ),
+          backgroundColor: const Color(0xFF92E3A9),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Form(
+            key: formKey,
+            child: ListView(
+              children: [
+                const SizedBox(height: 3.5),
+                Material(
+                  elevation: 5,
+                  shadowColor: const Color(0xFF92E3A9), // Updated shadow color
+                  borderRadius: BorderRadius.circular(20),
+                  child: TextFormField(
+                    onSaved: (val) {
+                      Global.global.degree = val;
+                    },
+                    validator: (val) =>
+                        val!.isEmpty ? '* Must Be Enter Degree' : null,
+                    onFieldSubmitted: (val) {
+                      formKey.currentState!.validate();
+                    },
+                    initialValue: Global.global.degree,
+                    keyboardType: TextInputType.text,
+                    textInputAction: TextInputAction.next,
+                    decoration: InputDecoration(
+                      labelText: ' Student Name',
+                      hintText: 'Enter your name',
+                      hintStyle: TextStyle(color: Colors.grey.shade400),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 30),
+                Material(
+                  elevation: 5,
+                  shadowColor: const Color(0xFF92E3A9), // Updated shadow color
+                  borderRadius: BorderRadius.circular(20),
+                  child: TextFormField(
+                    onSaved: (val) {
+                      Global.global.clg = val;
+                    },
+                    validator: (val) =>
+                        val!.isEmpty ? '*Must Be Enter Anyone' : null,
+                    onFieldSubmitted: (val) {
+                      formKey.currentState!.validate();
+                    },
+                    initialValue: Global.global.clg,
+                    keyboardType: TextInputType.text,
+                    textInputAction: TextInputAction.next,
+                    decoration: InputDecoration(
+                      labelText: 'School/University',
+                      hintText: 'Enter Your Institute ',
+                      hintStyle: TextStyle(color: Colors.grey.shade400),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 30),
+                Material(
+                  elevation: 5,
+                  shadowColor: const Color(0xFF92E3A9), // Updated shadow color
+                  borderRadius: BorderRadius.circular(20),
+                  child: TextFormField(
+                    onSaved: (val) {
+                      Global.global.per = val;
+                    },
+                    validator: (val) =>
+                        val!.isEmpty ? "Must Enter your percentage" : null,
+                    onFieldSubmitted: (val) {
+                      formKey.currentState!.validate();
+                    },
+                    initialValue: Global.global.per,
+                    keyboardType: TextInputType.number,
+                    textInputAction: TextInputAction.next,
+                    decoration: InputDecoration(
+                      labelText: 'Student GRID',
+                      hintText: 'Enter Your Id ',
+                      hintStyle: TextStyle(color: Colors.grey.shade400),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 30),
+                Align(
+                  alignment: const Alignment(0, 0),
+                  child: FloatingActionButton.small(
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          //Dialogue box
+                          return SimpleDialog(
+                            title: Row(
+                              children: [
+                                const Text('Select Option'),
+                                const Spacer(),
+                                IconButton(
+                                    onPressed: () {
+                                      if (Global.global.selectedImage != null) {
+                                        Navigator.pop(context);
+                                      }
+                                    },
+                                    icon: const Icon(Icons.cancel))
+                              ],
+                            ),
+                            children: [
+                              //Gallery Button
+                              IconButton(
+                                onPressed: () async {
+                                  XFile? img = await ImagePicker().pickImage(
+                                    source: ImageSource.gallery,
+                                  );
+                                  if (img != null) {
+                                    setState(() {
+                                      Global.global.selectedImage =
+                                          File(img.path);
+                                      Navigator.pop(context);
+                                    });
+                                  }
+                                },
+                                icon: const Icon(
+                                  Icons.photo,
+                                  size: 50,
+                                  color:
+                                      Color(0xFF92E3A9), // Updated icon color
+                                ),
+                              ),
+                              //Camera Button
+                              IconButton(
+                                onPressed: () async {
+                                  final img = await ImagePicker().pickImage(
+                                    source: ImageSource.camera,
+                                  );
+                                  if (img != null) {
+                                    setState(
+                                      () {
+                                        Global.global.selectedImage =
+                                            File(img.path);
+                                        Navigator.pop(context);
+                                      },
+                                    );
+                                  }
+                                },
+                                icon: const Icon(
+                                  Icons.photo_camera,
+                                  size: 50,
+                                  color:
+                                      Color(0xFF92E3A9), // Updated icon color
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(70),
+                    ),
+                    child: const Icon(
+                      Icons.add,
+                    ),
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+//Save Button
+                    SizedBox(
+                      height: 50,
+                      width: 150,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          if (formKey.currentState!.validate()) {
+                            formKey.currentState!.save();
+                          }
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            mySnackBar(
+                              content: formKey.currentState!.validate()
+                                  ? "Form saved"
+                                  : "Failed to validate the form",
+                              color: formKey.currentState!.validate()
+                                  ? Colors.green
+                                  : Colors.red,
+                            ),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              const Color(0xFF92E3A9), // Button color updated
+                          foregroundColor: Colors.white,
+                        ),
+                        child: const Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            Text(
+                              'Save',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 50,
+                      width: 150,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Global.global.user.resets();
+                          formKey.currentState!.reset();
+                          // setState(() {});
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              const Color(0xFF92E3A9), // Button color updated
+                          foregroundColor: Colors.white,
+                        ),
+                        child: const Text(
+                          'Reset',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 20,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+ 

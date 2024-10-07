@@ -1,0 +1,9 @@
+import 'package:flutter/material.dart';
+
+class MyRoutes {
+  static String splashPage = "/";
+  static String homePage = "home_page";
+  static String detailPage = "detail_page";
+
+  static Map<String, Widget Function(BuildContext)> routes = {};
+}
